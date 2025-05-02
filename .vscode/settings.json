@@ -1,0 +1,10 @@
+{
+  "git.ignoreLimitWarning": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false,
+    "typescriptreact": true
+  }
+}

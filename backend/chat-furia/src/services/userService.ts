@@ -1,0 +1,60 @@
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { CreationAttributes } from 'sequelize';
+import User from '../models/User';
+import { logError } from '../utils/logger';
+
+export class UserService {
+  async createUser(userData: CreationAttributes<User>): Promise<User> {
+    try {
+      // Hash da senha antes de armazenar
+      if (userData.password) {
+        userData.password = await bcrypt.hash(userData.password, 10);
+      }
+
+      const user = await User.create(userData);
+      return user;
+    } catch (error) {
+      logError(
+        `Erro ao criar usuário: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+      throw error;
+    }
+  }
+
+  async authenticateUser(
+    email: string,
+    password: string
+  ): Promise<string | null> {
+    try {
+      const user = await User.findOne({ where: { email } });
+
+      // Verifica se o usuário existe e se a senha está correta
+      if (user && (await bcrypt.compare(password, user.password))) {
+        const token = jwt.sign(
+          {
+            id: user.id,
+            email: user.email,
+            name: user.username,
+          },
+          process.env.JWT_SECRET || 'sua_chave_secreta',
+          { expiresIn: '24h' } // Token expira em 24 horas
+        );
+
+        return token;
+      }
+      return null;
+    } catch (error) {
+      logError(
+        `Erro na autenticação: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+      throw error;
+    }
+  }
+
+  // ...existing code...
+}
