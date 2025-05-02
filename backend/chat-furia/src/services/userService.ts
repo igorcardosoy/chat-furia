@@ -5,6 +5,22 @@ import User from '../models/User';
 import { logError } from '../utils/logger';
 
 export class UserService {
+  deleteUser(userId: string) {
+    return User.destroy({
+      where: { id: userId },
+    });
+  }
+
+  updateUser(userId: string, updatedData: any) {
+    return User.update(updatedData, {
+      where: { id: userId },
+    });
+  }
+
+  getUserById(userId: string) {
+    return User.findByPk(userId);
+  }
+
   async createUser(userData: CreationAttributes<User>): Promise<User> {
     try {
       // Hash da senha antes de armazenar
@@ -55,6 +71,4 @@ export class UserService {
       throw error;
     }
   }
-
-  // ...existing code...
 }
