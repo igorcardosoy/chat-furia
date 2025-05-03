@@ -2,7 +2,6 @@ import http from 'http';
 import { app } from './app';
 import { startDatabase } from './config/database';
 import setupSocket from './config/socket';
-import { logError, logInfo } from './utils/logger';
 
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
@@ -10,17 +9,15 @@ const server = http.createServer(app);
 const startServer = async () => {
   try {
     await startDatabase();
-
-    // Configurar Socket.io com servidor HTTP existente
-    const io = setupSocket(app);
+    setupSocket(server);
 
     server.listen(PORT, () => {
-      logInfo(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server is running on port ${PORT}.`);
+      console.log(`Socket.IO is initialized`);
     });
-    logInfo('Database connected');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    logError(`Error connecting to the database: ${errorMessage}`);
+    console.error(`Error starting server: ${errorMessage}`);
     process.exit(1);
   }
 };

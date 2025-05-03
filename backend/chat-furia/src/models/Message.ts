@@ -1,13 +1,32 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 
-class Message extends Model {
+interface MessageAttributes {
+  id: number;
+  content: string;
+  userId: number;
+  username?: string;
+  chatId: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+interface MessageCreationAttributes {
+  content: string;
+  userId: number; // Mudado para number
+  chatId: number; // Mudado para number
+}
+
+class Message
+  extends Model<MessageAttributes, MessageCreationAttributes>
+  implements MessageAttributes
+{
   public id!: number;
-  public chatId!: number;
-  public userId!: number;
   public content!: string;
-  public createdAt!: Date;
-  public updatedAt!: Date;
+  public userId!: number;
+  public chatId!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Message.init(
@@ -17,34 +36,31 @@ Message.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    chatId: {
-      type: DataTypes.INTEGER,
+    content: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    content: {
-      type: DataTypes.STRING,
+    chatId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
   },
   {
     sequelize,
     tableName: 'messages',
+    modelName: 'Message',
     timestamps: true,
   }
 );
+
+import Chat from './Chat';
+import User from './User';
+
+Message.belongsTo(User, { foreignKey: 'userId', as: 'sender' });
+Message.belongsTo(Chat, { foreignKey: 'chatId', as: 'chat' });
 
 export default Message;

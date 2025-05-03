@@ -4,10 +4,14 @@ import User from '../models/User';
 import { logError } from '../utils/logger';
 
 class ChatService {
-  async createChat(chatData: { name: string; users: string[] }) {
-    const chat = await Chat.create(chatData);
+  createChat = async () => {
+    const chat = await Chat.create({
+      name: 'Chat de Teste',
+      users: [],
+    });
+    console.log('Chat criado com ID:', chat.id);
     return chat;
-  }
+  };
 
   async getChatById(chatId: string) {
     const chat = await Chat.findByPk(chatId);
@@ -18,7 +22,7 @@ class ChatService {
   }
 
   async sendMessage(
-    chatId: string,
+    chatId: number,
     messageData: { senderId: string; content: string }
   ) {
     try {
@@ -30,7 +34,7 @@ class ChatService {
 
       const message = await Message.create({
         chatId,
-        userId: messageData.senderId,
+        userId: Number(messageData.senderId),
         content: messageData.content,
       });
 

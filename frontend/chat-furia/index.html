@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO Test Client</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+      function displayMessage(message) {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML += `<p><strong>Usuário ${message.userId}:</strong> ${message.content}</p>`;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Conecte ao seu servidor (ajuste a URL conforme necessário)
+        const socket = io('http://localhost:3000');
+
+        // Eventos de conexão
+        socket.on('connect', () => {
+          console.log('Conectado ao servidor!');
+          document.getElementById('status').textContent = 'Conectado';
+          document.getElementById('status').style.color = 'green';
+        });
+
+        socket.on('disconnect', () => {
+          console.log('Desconectado do servidor');
+          document.getElementById('status').textContent = 'Desconectado';
+          document.getElementById('status').style.color = 'red';
+        });
+
+        // Eventos de mensagens
+        socket.on('receiveMessage', message => {
+          console.log('Mensagem recebida:', message);
+          const messagesDiv = document.getElementById('messages');
+          messagesDiv.innerHTML += `<p><strong>Usuário ${message.userId}:</strong> ${message.content}</p>`;
+        });
+
+        // Configurar manipuladores de eventos para os botões
+        document.getElementById('joinBtn').addEventListener('click', () => {
+          const chatId = document.getElementById('chatId').value;
+          socket.emit('joinChat', chatId);
+          console.log(`Enviado evento joinChat para sala ${chatId}`);
+
+          socket.on('chatHistory', messages => {
+            console.log('Received chat history:', messages);
+            // Mostrar as mensagens na interface
+            messages.forEach(message => {
+              displayMessage(message);
+            });
+          });
+
+          // Também precisamos tratar erros
+          socket.on('error', error => {
+            console.error('Socket error:', error.message);
+            // Mostrar o erro na interface se necessário
+          });
+        });
+
+        document.getElementById('sendBtn').addEventListener('click', () => {
+          const chatId = document.getElementById('chatId').value;
+          const message = document.getElementById('message').value;
+          const userId = document.getElementById('userId').value || 'anônimo';
+
+          socket.emit('sendMessage', {
+            chatId,
+            content: message,
+            userId,
+          });
+
+          document.getElementById('message').value = '';
+        });
+      });
+    </script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input,
+      button {
+        padding: 8px;
+      }
+      button {
+        cursor: pointer;
+      }
+      #messages {
+        border: 1px solid #ddd;
+        padding: 10px;
+        height: 300px;
+        overflow-y: scroll;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Socket.IO Test Client</h1>
+    <p>Status: <span id="status">Desconectado</span></p>
+
+    <div class="form-group">
+      <label for="userId">ID do Usuário:</label>
+      <input type="text" id="userId" placeholder="Seu ID" />
+    </div>
+
+    <div class="form-group">
+      <label for="chatId">ID da Sala:</label>
+      <input type="text" id="chatId" placeholder="ID da sala" />
+      <button id="joinBtn">Entrar na Sala</button>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Mensagem:</label>
+      <input type="text" id="message" placeholder="Digite sua mensagem" />
+      <button id="sendBtn">Enviar</button>
+    </div>
+
+    <h2>Mensagens:</h2>
+    <div id="messages"></div>
+  </body>
+</html>

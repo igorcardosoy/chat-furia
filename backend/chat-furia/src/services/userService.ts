@@ -4,7 +4,7 @@ import { CreationAttributes } from 'sequelize';
 import User from '../models/User';
 import { logError } from '../utils/logger';
 
-export class UserService {
+class UserService {
   deleteUser(userId: string) {
     return User.destroy({
       where: { id: userId },
@@ -72,3 +72,5 @@ export class UserService {
     }
   }
 }
+
+export default new UserService();
