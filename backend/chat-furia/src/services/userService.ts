@@ -2,7 +2,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { CreationAttributes } from 'sequelize';
 import User from '../models/User';
+import { UserProfile as UserType } from '../types/user';
 import { logError } from '../utils/logger';
+
+interface UserAuthResponse {
+  token: string;
+  user: UserType;
+}
 
 class UserService {
   deleteUser(userId: string) {
@@ -29,13 +35,10 @@ class UserService {
       }
 
       const user = await User.create(userData);
+
       return user;
     } catch (error) {
-      logError(
-        `Erro ao criar usuário: ${
-          error instanceof Error ? error.message : String(error)
-        }`
-      );
+      console.log(`Erro ao criar usuário: ${String(error)}`);
       throw error;
     }
   }
@@ -43,7 +46,7 @@ class UserService {
   async authenticateUser(
     email: string,
     password: string
-  ): Promise<string | null> {
+  ): Promise<UserAuthResponse | null> {
     try {
       const user = await User.findOne({ where: { email } });
 
@@ -56,12 +59,20 @@ class UserService {
             name: user.username,
           },
           process.env.JWT_SECRET || 'sua_chave_secreta',
-          { expiresIn: '24h' } // Token expira em 24 horas
+          { expiresIn: '24h' }
         );
 
-        return token;
+        return {
+          token,
+          user: {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+          },
+        };
       }
-      return null;
+
+      throw new Error('Email ou senha inválidos');
     } catch (error) {
       logError(
         `Erro na autenticação: ${

@@ -1,3 +1,4 @@
+import { User } from '@/types/user';
 import { Server } from 'http';
 import { Server as SocketServer } from 'socket.io';
 import { getMessagesByChatId, saveMessage } from '../services/messageService';
@@ -9,24 +10,6 @@ const setupSocket = (server: Server) => {
       methods: ['GET', 'POST'],
     },
   });
-
-  /*   userService.createUser({
-    id: 123,
-    username: 'igor',
-    email: 'igor@',
-    password: '',
-    role: 'user',
-  });
-
-  userService.createUser({
-    id: 321,
-    username: 'jorgegin',
-    email: 'jorgegin@',
-    password: '',
-    role: 'user',
-  });
-
-  chatService.createChat(); */
 
   io.on('connection', socket => {
     console.log('A user connected');
@@ -47,25 +30,26 @@ const setupSocket = (server: Server) => {
 
     socket.on(
       'sendMessage',
-      async (message: {
-        chatId: number;
-        content: string;
-        userId: number;
-        username: string;
-      }) => {
+      async (message: { chatId: number; content: string; user: User }) => {
         try {
           const savedMessage = await saveMessage(
             message.content,
-            message.userId,
+            message.user.id,
             message.chatId
           );
 
-          // Adiciona o username ao objeto da mensagem
-          /* savedMessage.username = message.username */
-          const messageToSend = savedMessage.get({ plain: true });
-          messageToSend.username = message.username;
+          const emuittedMessage = {
+            id: savedMessage?.id,
+            chatId: message.chatId,
+            user: {
+              id: message.user.id,
+              username: message.user.username,
+              email: message.user.email,
+            },
+            content: message.content,
+          };
 
-          io.to(String(message.chatId)).emit('receiveMessage', messageToSend);
+          io.to(message.chatId.toString()).emit('newMessage', emuittedMessage);
         } catch (error) {
           console.error('Error processing message:', error);
           socket.emit('error', { message: 'Failed to send message' });

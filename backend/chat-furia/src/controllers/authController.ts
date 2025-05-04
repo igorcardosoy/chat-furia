@@ -16,8 +16,12 @@ class AuthController {
   async login(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
-      const token = await userService.authenticateUser(email, password);
-      res.status(200).json({ message: 'Login successful', token });
+      const data = await userService.authenticateUser(email, password);
+      res.status(200).json({
+        message: 'Login successful',
+        data: data?.token,
+        user: data?.user,
+      });
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : 'Unknown error occurred';

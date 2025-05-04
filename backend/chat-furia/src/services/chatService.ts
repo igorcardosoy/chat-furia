@@ -38,7 +38,18 @@ class ChatService {
         content: messageData.content,
       });
 
-      return message;
+      // Buscar a mensagem com os dados do usuário
+      const messageWithUser = await Message.findByPk(message.id, {
+        include: [
+          {
+            model: User,
+            as: 'sender',
+            attributes: ['id', 'username', 'email'],
+          },
+        ],
+      });
+
+      return messageWithUser;
     } catch (error) {
       logError(
         `Erro ao enviar mensagem: ${
@@ -62,7 +73,7 @@ class ChatService {
         {
           model: User,
           as: 'sender',
-          attributes: ['id', 'username'],
+          attributes: ['id', 'username', 'email'],
         },
       ],
     });

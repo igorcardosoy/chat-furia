@@ -11,7 +11,7 @@ app.use(cors());
 app.use(json());
 
 // API Routes
-app.use('/api', routes);
+app.use('/', routes);
 
 // Middleware de tratamento de erros (deve estar após as rotas)
 app.use(errorHandler);

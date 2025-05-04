@@ -58,9 +58,9 @@ export const validateRegistration = (
   res: Response,
   next: NextFunction
 ): void => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!name || !email || !password) {
+  if (!username || !email || !password) {
     res.status(400).json({ message: 'Nome, email e senha são obrigatórios' });
     return;
   }

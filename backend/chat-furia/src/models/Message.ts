@@ -5,7 +5,6 @@ interface MessageAttributes {
   id: number;
   content: string;
   userId: number;
-  username?: string;
   chatId: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -13,8 +12,8 @@ interface MessageAttributes {
 
 interface MessageCreationAttributes {
   content: string;
-  userId: number; // Mudado para number
-  chatId: number; // Mudado para number
+  userId: number;
+  chatId: number;
 }
 
 class Message
@@ -27,6 +26,9 @@ class Message
   public chatId!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Associações virtuais que serão preenchidas pelo Sequelize
+  public readonly sender?: any; // Representará o usuário completo
 }
 
 Message.init(
@@ -60,7 +62,11 @@ Message.init(
 import Chat from './Chat';
 import User from './User';
 
-Message.belongsTo(User, { foreignKey: 'userId', as: 'sender' });
+// Definimos que cada mensagem pertence a um usuário, com alias 'sender'
+Message.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'sender',
+});
 Message.belongsTo(Chat, { foreignKey: 'chatId', as: 'chat' });
 
 export default Message;

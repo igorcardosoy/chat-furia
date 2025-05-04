@@ -3,8 +3,8 @@ import User from '../models/User';
 
 export const saveMessage = async (
   content: string,
-  userId: number, // Alterado para number
-  chatId: number // Alterado para number
+  userId: number,
+  chatId: number
 ) => {
   try {
     const message = await Message.create({
@@ -12,7 +12,16 @@ export const saveMessage = async (
       userId,
       chatId,
     });
-    return message;
+
+    return await Message.findByPk(message.id, {
+      include: [
+        {
+          model: User,
+          as: 'sender',
+          attributes: ['id', 'username', 'email'],
+        },
+      ],
+    });
   } catch (error) {
     console.error('Error saving message:', error);
     throw error;
@@ -28,7 +37,7 @@ export const getMessagesByChatId = async (chatId: number) => {
         {
           model: User,
           as: 'sender',
-          attributes: ['id', 'username'],
+          attributes: ['id', 'username', 'email'],
         },
       ],
       order: [['createdAt', 'ASC']],

@@ -1,7 +1,10 @@
+import { UserProfile } from './user';
+
 export interface Message {
-    id: number;
-    chatId: number;
-    userId: number;
-    content: string;
-    timestamp: Date;
+  id: number;
+  chatId: number;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  sender: UserProfile; // Agora usamos o objeto UserProfile completo
 }
