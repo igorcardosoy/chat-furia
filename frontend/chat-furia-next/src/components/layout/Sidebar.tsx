@@ -3,7 +3,6 @@ import React from 'react';
 import FuriaLogo from '../../../public/furia.svg';
 import ChatLogo from '../chat/ChatLogo';
 
-import ChessLogo from '../../../public/chess.svg';
 import CS2Logo from '../../../public/cs2.svg';
 import RLLogo from '../../../public/rl.svg';
 import ValorantLogo from '../../../public/valorant.svg';
@@ -37,9 +36,6 @@ const Sidebar: React.FC = () => {
           </li>
           <li>
             <ChatLogo chatName='RL' svgLogo={RLLogo} chatId='5' />
-          </li>
-          <li>
-            <ChatLogo chatName='Xadrez' svgLogo={ChessLogo} chatId='6' />
           </li>
         </ul>
       </nav>
