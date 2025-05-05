@@ -12,6 +12,8 @@ export interface ChatMessage {
   chatId: number | string;
   user: User;
   content: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ChatRoom {

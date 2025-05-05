@@ -30,5 +30,6 @@ export const getMessages = async (chatId: string): Promise<ChatMessage[]> => {
     },
     content: message.content,
     createdAt: new Date(message.createdAt),
+    updatedAt: new Date(message.updatedAt),
   }));
 };

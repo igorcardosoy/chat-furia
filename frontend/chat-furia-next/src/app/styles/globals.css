@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+
+@layer base {
+  :root {
+    --color-primary: #000000;
+    --color-secondary: #bd9317;
+    --color-accent: #c49e2d;
+    --color-text-light: #ffffff;
+    --color-text-dark: #1a1a1a;
+  }
+
+  body {
+    @apply bg-black text-white;
+  }
+}

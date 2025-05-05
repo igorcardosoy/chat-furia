@@ -12,19 +12,26 @@ const MessageList: React.FC<MessageListProps> = ({
   currentUserId,
 }) => {
   if (!messages || messages.length === 0) {
-    return <div className='text-center p-4 text-gray-500'>No messages yet</div>;
+    return (
+      <div className='flex items-center justify-center h-full'>
+        <div className='text-center p-8 text-gray-500'>
+          <div className='text-6xl mb-4'>💬</div>
+          <p>Nenhuma mensagem ainda, seja o primeiro a enviar uma!</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className='flex flex-col space-y-2'>
+    <div className='flex flex-col space-y-3 p-4'>
       {messages.map((message, index) => (
         <div
           key={message.id || index}
           className={`${
             message.user.id === currentUserId
-              ? 'self-end bg-blue-100'
-              : 'self-start bg-gray-100'
-          }`}>
+              ? 'self-end bg-gray-800 border-gray-700'
+              : 'self-start bg-gray-900 border-gray-800'
+          } border rounded-lg`}>
           <ChatMessage message={message} />
         </div>
       ))}

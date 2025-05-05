@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Button from '../ui/Button';
 
 interface ChatInputProps {
   onSendMessage: (content: string) => void;
@@ -19,21 +20,24 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex items-center p-4'>
+    <form
+      onSubmit={handleSubmit}
+      className='flex items-center p-4 bg-gray-900 border-t border-gray-800'>
       <input
         type='text'
         value={message}
         onChange={e => setMessage(e.target.value)}
         placeholder='Type a message...'
-        className='flex-grow p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500'
+        className='flex-grow p-3 bg-gray-800 border border-gray-700 text-white rounded-l-md focus:outline-none focus:ring-2 focus:ring-amber-400'
         disabled={disabled}
       />
-      <button
+      <Button
         type='submit'
         disabled={!message.trim() || disabled}
-        className='bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 disabled:bg-gray-300'>
+        className='rounded-l-none rounded-r-md'
+        variant='primary'>
         Send
-      </button>
+      </Button>
     </form>
   );
 };

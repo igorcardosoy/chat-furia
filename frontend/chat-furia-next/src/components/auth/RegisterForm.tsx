@@ -3,6 +3,7 @@
 import { RegisterCredentials } from '@/types/auth';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
+import Button from '../ui/Button';
 
 interface RegisterFormProps {
   onRegister: (credentials: RegisterCredentials) => void;
@@ -19,9 +20,11 @@ const RegisterForm = ({ onRegister }: RegisterFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='w-full max-w-md'>
+    <form onSubmit={handleSubmit} className='w-full max-w-md space-y-4'>
       <div className='mb-4'>
-        <label htmlFor='username' className='block text-sm font-medium mb-1'>
+        <label
+          htmlFor='username'
+          className='block text-sm font-medium text-gray-300 mb-1'>
           Username
         </label>
         <input
@@ -29,13 +32,15 @@ const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           type='text'
           value={username}
           onChange={e => setUsername(e.target.value)}
-          className='w-full p-2 border rounded'
+          className='w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-white'
           required
         />
       </div>
 
       <div className='mb-4'>
-        <label htmlFor='email' className='block text-sm font-medium mb-1'>
+        <label
+          htmlFor='email'
+          className='block text-sm font-medium text-gray-300 mb-1'>
           Email
         </label>
         <input
@@ -43,13 +48,15 @@ const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           type='email'
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className='w-full p-2 border rounded'
+          className='w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-white'
           required
         />
       </div>
 
       <div className='mb-6'>
-        <label htmlFor='password' className='block text-sm font-medium mb-1'>
+        <label
+          htmlFor='password'
+          className='block text-sm font-medium text-gray-300 mb-1'>
           Password
         </label>
         <input
@@ -57,20 +64,18 @@ const RegisterForm = ({ onRegister }: RegisterFormProps) => {
           type='password'
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className='w-full p-2 border rounded'
+          className='w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-white'
           required
         />
       </div>
 
-      <button
-        type='submit'
-        className='w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700'>
+      <Button type='submit' fullWidth={true} variant='primary'>
         Register
-      </button>
+      </Button>
 
-      <p className='mt-4 text-center'>
+      <p className='mt-4 text-center text-gray-300'>
         Already have an account?{' '}
-        <Link href='/login' className='text-blue-600 hover:underline'>
+        <Link href='/login' className='text-amber-400 hover:underline'>
           Login here
         </Link>
       </p>

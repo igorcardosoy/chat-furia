@@ -14,7 +14,6 @@ const setupSocket = (server: Server) => {
   io.on('connection', socket => {
     console.log('A user connected');
 
-    // Implementação do join em salas de chat específicas
     socket.on('joinChat', async (chatId: string) => {
       socket.join(chatId);
       console.log(`User joined chat ${chatId}`);
@@ -47,6 +46,8 @@ const setupSocket = (server: Server) => {
               email: message.user.email,
             },
             content: message.content,
+            createdAt: savedMessage?.createdAt,
+            updatedAt: savedMessage?.updatedAt,
           };
 
           io.to(message.chatId.toString()).emit('newMessage', emuittedMessage);

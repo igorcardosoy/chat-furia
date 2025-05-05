@@ -26,7 +26,7 @@ const LoginPage = () => {
         }
 
         await authContext.login(email, password);
-        router.push('/home/chat');
+        router.push('/chat');
       } catch (err: any) {
         console.error('Login error:', err);
         setError(err.message || 'Invalid email or password');

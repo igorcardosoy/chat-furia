@@ -4,15 +4,6 @@ import User from '../models/User';
 import { logError } from '../utils/logger';
 
 class ChatService {
-  createChat = async () => {
-    const chat = await Chat.create({
-      name: 'Chat de Teste',
-      users: [],
-    });
-    console.log('Chat criado com ID:', chat.id);
-    return chat;
-  };
-
   async getChatById(chatId: string) {
     const chat = await Chat.findByPk(chatId);
     if (!chat) {
@@ -26,7 +17,6 @@ class ChatService {
     messageData: { senderId: string; content: string }
   ) {
     try {
-      // Verificar se o chat existe
       const chat = await Chat.findByPk(chatId);
       if (!chat) {
         throw new Error('Chat não encontrado');
@@ -38,7 +28,6 @@ class ChatService {
         content: messageData.content,
       });
 
-      // Buscar a mensagem com os dados do usuário
       const messageWithUser = await Message.findByPk(message.id, {
         include: [
           {

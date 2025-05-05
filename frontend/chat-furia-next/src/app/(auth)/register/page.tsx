@@ -26,7 +26,7 @@ const RegisterPage = () => {
   return (
     <div className='flex flex-col items-center justify-center min-h-screen p-4'>
       <h1 className='text-2xl font-bold mb-4'>Register</h1>
-      {error && <p className='text-red-500 mb-4'>{error}</p>}
+      {error && <p className='text-amber-400 mb-4'>{error}</p>}
       <RegisterForm onRegister={handleRegister} />
       {loading && <p className='mt-4'>Processing...</p>}
     </div>

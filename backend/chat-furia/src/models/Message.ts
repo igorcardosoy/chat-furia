@@ -26,9 +26,7 @@ class Message
   public chatId!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-
-  // Associações virtuais que serão preenchidas pelo Sequelize
-  public readonly sender?: any; // Representará o usuário completo
+  public readonly sender?: any;
 }
 
 Message.init(
@@ -62,7 +60,6 @@ Message.init(
 import Chat from './Chat';
 import User from './User';
 
-// Definimos que cada mensagem pertence a um usuário, com alias 'sender'
 Message.belongsTo(User, {
   foreignKey: 'userId',
   as: 'sender',

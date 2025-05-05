@@ -29,7 +29,6 @@ class UserService {
 
   async createUser(userData: CreationAttributes<User>): Promise<User> {
     try {
-      // Hash da senha antes de armazenar
       if (userData.password) {
         userData.password = await bcrypt.hash(userData.password, 10);
       }

@@ -39,7 +39,7 @@ export default function HomeLayout({
       <Sidebar />
       <div className='flex flex-col flex-1 overflow-hidden'>
         <Header />
-        <main className='flex-1 overflow-auto p-4'>{children}</main>
+        <main className='flex-1 overflow-auto p-4  bg-black'>{children}</main>
       </div>
     </div>
   );

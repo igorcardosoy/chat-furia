@@ -2,6 +2,7 @@ import http from 'http';
 import { app } from './app';
 import { startDatabase } from './config/database';
 import setupSocket from './config/socket';
+import { mockChatDatabase } from './models/Chat';
 
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
@@ -9,7 +10,10 @@ const server = http.createServer(app);
 const startServer = async () => {
   try {
     await startDatabase();
+
     setupSocket(server);
+
+    await mockChatDatabase();
 
     server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}.`);

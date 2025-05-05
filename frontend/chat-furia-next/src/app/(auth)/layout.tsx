@@ -17,7 +17,6 @@ export default function AuthLayout({
 
   useEffect(() => {
     const checkAuth = async () => {
-      // Only proceed if we haven't already attempted to redirect
       if (redirectAttempted.current) {
         return;
       }
@@ -27,9 +26,8 @@ export default function AuthLayout({
           await authContext.checkUser();
         }
 
-        // If user is authenticated and we haven't redirected yet
         if (authContext?.user && !redirectAttempted.current) {
-          redirectAttempted.current = true; // Mark that we've attempted to redirect
+          redirectAttempted.current = true;
           router.push('/chat');
           return;
         }
@@ -43,21 +41,20 @@ export default function AuthLayout({
     checkAuth();
   }, [authContext, router]);
 
-  // Show loading state while checking authentication
   if (isLoading) {
     return (
-      <div className='flex items-center justify-center h-screen'>
+      <div className='flex items-center justify-center h-screen bg-black'>
         <div className='text-center'>
-          <div className='w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto'></div>
-          <p className='mt-4 text-gray-600'>Loading...</p>
+          <div className='w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto'></div>
+          <p className='mt-4 text-gray-400'>Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className='flex items-center justify-center min-h-screen bg-gray-50'>
-      <div className='w-full max-w-md p-8 bg-white rounded-lg shadow-md'>
+    <div className='flex items-center justify-center min-h-screen bg-black'>
+      <div className='w-full max-w-md p-8 rounded-lg bg-black shadow-xl'>
         {children}
       </div>
     </div>
