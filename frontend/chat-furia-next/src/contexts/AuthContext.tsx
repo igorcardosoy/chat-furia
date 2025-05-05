@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     fetchUser();
-  }, []);
+  });
 
   const checkUser = async () => {
     const userData = localStorage.getItem('user');

@@ -16,8 +16,8 @@ const RegisterPage = () => {
     try {
       await registerUser(userData.username, userData.email, userData.password);
       router.push('/login');
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
     } finally {
       setLoading(false);
     }

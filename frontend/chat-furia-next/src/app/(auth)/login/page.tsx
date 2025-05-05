@@ -27,9 +27,8 @@ const LoginPage = () => {
 
         await authContext.login(email, password);
         router.push('/chat');
-      } catch (err: any) {
-        console.error('Login error:', err);
-        setError(err.message || 'Invalid email or password');
+      } catch (err: unknown) {
+        if (err instanceof Error) setError(err.message);
       } finally {
         setIsLoggingIn(false);
       }
@@ -50,7 +49,7 @@ const LoginPage = () => {
       <LoginForm onSubmit={handleSubmit} isSubmitting={isLoggingIn} />
 
       <p className='mt-4'>
-        Don't have an account?{' '}
+        Don`&apos;`t have an account?{' '}
         <Link href='/register' className='text-blue-500 hover:underline'>
           Register
         </Link>

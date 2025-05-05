@@ -11,7 +11,6 @@ export default function AuthLayout({
 }) {
   const router = useRouter();
   const authContext = useContext(AuthContext);
-  const user = authContext?.user;
   const [isLoading, setIsLoading] = useState(true);
   const redirectAttempted = useRef(false);
 

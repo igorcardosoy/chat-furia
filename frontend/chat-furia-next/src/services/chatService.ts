@@ -18,10 +18,22 @@ export const sendMessage = async (
   return response.data;
 };
 
+interface ChatMessageResponse {
+  id: string;
+  chatId: string;
+  sender: {
+    id: string;
+    username: string;
+  };
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export const getMessages = async (chatId: string): Promise<ChatMessage[]> => {
   const response = await axios.get(`${API_URL}/chat/${chatId}/messages`);
 
-  return response.data.map((message: any) => ({
+  return response.data.map((message: ChatMessageResponse) => ({
     id: message.id,
     chatId: message.chatId,
     user: {

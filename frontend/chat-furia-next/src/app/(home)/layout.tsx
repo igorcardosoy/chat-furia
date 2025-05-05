@@ -32,7 +32,7 @@ export default function HomeLayout({
     };
 
     checkAuth();
-  }, []);
+  });
 
   return (
     <div className='flex h-screen overflow-hidden bg-gray-100'>
