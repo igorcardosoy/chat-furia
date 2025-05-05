@@ -24,22 +24,22 @@ export default function Home() {
 
         <div className='grid md:grid-cols-2 gap-6 max-w-2xl mx-auto'>
           <Link href='/login'>
-            <div className='bg-gray-900 border border-gray-800 hover:border-red-600 p-8 rounded-lg transition-all hover:transform hover:-translate-y-1 cursor-pointer'>
+            <div className='bg-gray-900 border border-gray-800 hover:border-amber-600 p-8 rounded-lg transition-all hover:transform hover:-translate-y-1 cursor-pointer'>
               <h2 className='text-2xl font-bold mb-2'>Login</h2>
               <p className='text-gray-400 mb-4'>
                 Acesse sua conta para começar a conversar
               </p>
-              <div className='inline-block bg-red-600 text-white px-6 py-2 rounded-md'>
+              <div className='inline-block bg-amber-600 text-white px-6 py-2 rounded-md'>
                 Entrar
               </div>
             </div>
           </Link>
 
           <Link href='/register'>
-            <div className='bg-gray-900 border border-gray-800 hover:border-red-600 p-8 rounded-lg transition-all hover:transform hover:-translate-y-1 cursor-pointer'>
+            <div className='bg-gray-900 border border-gray-800 hover:border-amber-600 p-8 rounded-lg transition-all hover:transform hover:-translate-y-1 cursor-pointer'>
               <h2 className='text-2xl font-bold mb-2'>Cadastro</h2>
               <p className='text-gray-400 mb-4'>Crie uma nova conta</p>
-              <div className='inline-block bg-red-600 text-white px-6 py-2 rounded-md'>
+              <div className='inline-block bg-amber-600 text-white px-6 py-2 rounded-md'>
                 Cadastrar
               </div>
             </div>
