@@ -18,7 +18,7 @@ export default function Home() {
             <span className='text-amber-400'>FURIA</span> Chat
           </h1>
           <p className='text-xl text-gray-400 mb-8 max-w-2xl'>
-            A plataforma oficial de chat em tempo real para fãs da FURIA
+            A plataforma de chat em tempo real para fãs da FURIA
           </p>
         </div>
 

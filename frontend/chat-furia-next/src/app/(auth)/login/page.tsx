@@ -49,7 +49,7 @@ const LoginPage = () => {
       <LoginForm onSubmit={handleSubmit} isSubmitting={isLoggingIn} />
 
       <p className='mt-4'>
-        Don`&apos;`t have an account?{' '}
+        Não tem uma conta?{' '}
         <Link href='/register' className='text-blue-500 hover:underline'>
           Register
         </Link>

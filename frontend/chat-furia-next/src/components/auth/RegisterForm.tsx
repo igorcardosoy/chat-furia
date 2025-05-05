@@ -57,7 +57,7 @@ const RegisterForm = ({ onRegister }: RegisterFormProps) => {
         <label
           htmlFor='password'
           className='block text-sm font-medium text-gray-300 mb-1'>
-          Password
+          Senha
         </label>
         <input
           id='password'
